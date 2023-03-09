@@ -1,0 +1,27 @@
+SHELL = /bin/sh
+CC = gcc
+LIBNAME=libmygraph.a
+SRCFILE=graph.c
+OBJFILE=graph.o
+RM= rm -f
+BUILDLIB= ar rcs
+LIBDIR = /usr/local/lib
+INCLUDEDIR = /usr/include
+INCLUDESUBDIR = $(INCLUDEDIR)/mygraph
+LIBDEPEND = -ldatastruct
+
+graph.o: graph.h libdatastruct.so
+	$(CC) -c $(SRCFILE) $(LIBDEPEND)
+
+library: $(OBJFILE)
+	$(BUILDLIB) $(LIBNAME) $(OBJFILE)
+
+
+install: library
+	cp $(LIBNAME) $(LIBDIR)
+	-mkdir $(INCLUDESUBDIR)
+	cp mygraph.h $(INCLUDEDIR)
+	cp graph.h $(INCLUDESUBDIR)
+
+clean:
+	-$(RM) $(OBJFILE)

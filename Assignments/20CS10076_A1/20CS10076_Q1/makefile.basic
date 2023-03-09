@@ -1,0 +1,39 @@
+SHELL = /bin/sh                                           
+CC = gcc
+
+
+LIBNAME=libdatastruct.so
+SRCFILES=heap.c llist.c queue.c stack.c union_find.c
+OBJFILES=heap.o llist.o queue.o stack.o union_find.o
+HDRFILES=heap.h llist.h queue.h stack.h union_find.h
+BUILDOBJ= -fPIC -c
+BUILDLIB= -shared -o
+RM= rm -f
+LIBDIR = /usr/local/lib
+INCLUDEDIR = /usr/include
+INCLUDESUBDIR = $(INCLUDEDIR)/datastruct
+
+llist.o: llist.h
+	$(CC) $(BUILDOBJ) llist.c
+heap.o:heap.h
+	$(CC) $(BUILDOBJ) heap.c
+stack.o:llist.h stack.h
+	$(CC) $(BUILDOBJ) stack.c
+queue.o:llist.h queue.h
+	$(CC) $(BUILDOBJ) queue.c
+union_find.o:union_find.h
+	$(CC) $(BUILDOBJ) union_find.c
+
+library: $(OBJFILES)
+	$(CC) $(BUILDLIB) $(LIBNAME) $(OBJFILES)
+
+
+install: library
+	cp $(LIBNAME) $(LIBDIR)
+	-mkdir $(INCLUDESUBDIR)
+	cp datastruct.h $(INCLUDEDIR)
+	cp $(HDRFILES) $(INCLUDESUBDIR)
+
+clean:
+	-$(RM) $(OBJFILES)
+	

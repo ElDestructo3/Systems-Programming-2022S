@@ -1,0 +1,11 @@
+SHELL = /bin/sh
+CC= gcc
+EXECFILE= graph.out
+SRCFILE= main.c
+LIBDEPEND= -lmygraph -ldatastruct
+OUTBUILD= -Wall -o
+RM = rm -f
+
+graph.out: main.c libdatastruct.so libmygraph.a
+	$(CC) $(OUTBUILD) $(EXECFILE) $(SRCFILE) $(LIBDEPEND)
+
